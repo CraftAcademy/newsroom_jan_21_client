@@ -9,6 +9,15 @@
   padding-left: 10px;
 }
 
+.ui.fluid.card {
+  transform: none!important;
+}
+
+.hero-img {
+  height: 300px!important;
+  object-fit: cover;
+}
+
 .main-story {
   margin-top: 33px!important;
 }

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Container, Header, Segment, Button, Grid } from 'semantic-ui-react'
+import { Container, Header, Segment, Button, Grid, Image } from 'semantic-ui-react'
 import { useSelector } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
 import { getSingleArticle } from '../modules/articlesDataModule'
@@ -35,9 +35,12 @@ const SingleArticle = () => {
                   Published: {content.date}
                   <br />
                   Category: {content.category}
+                  <br />
+                  {content.author && `Author: ${content.author.name}`}
                 </Header.Subheader>
-                <Header as="h4" data-cy="article-teaser">{content.teaser}</Header>
               </Header>
+              <Image alt="article-image" src={content.image}/>
+              <Header as="h4" data-cy="article-teaser">{content.teaser}</Header>
               <p data-cy="article-body">{contentList}</p>
             </>
           ) : (
