@@ -20,12 +20,6 @@ describe('only displays ads for un-registered users', () => {
             return callback(stubLocation)
           }
         )
-        const credentials = {
-          uid: 'user@gmail.com',
-          client: 'dsij21879uasdiSAD',
-          "access-token": 'pojdsAsad767ASD'
-        }
-        window.localStorage.setItem('J-tockAuth-Storage', JSON.stringify(credentials))
       }
     }))
   })
@@ -33,7 +27,7 @@ describe('only displays ads for un-registered users', () => {
     beforeEach(() => {
       cy.route({
         method: 'POST',
-        url: 'http://localhost:3000/api/auth?**',
+        url: 'http://localhost:3000/api/auth',
         response: 'fixture:validatedLogin.json',
         headers: {
           uid: 'user@gmail.com'
@@ -91,20 +85,13 @@ describe('only displays ads for un-registered users', () => {
     beforeEach(() => {
       cy.route({
         method: 'GET',
-        url: 'http://localhost:3000/api/auth/validate_token?**',
+        url: 'http://localhost:3000/api/auth/validate_token',
         response: 'fixture:validatedLogin.json',
         headers: {
           uid: 'user@gmail.com'
         }
       })
-      cy.on('window:before:load', (windows) => {
-        const credentials = {
-          uid: 'user@gmail.com',
-          client: 'dsij21879uasdiSAD',
-          "access-token": 'pojdsAsad767ASD'
-        }
-        window.localStorage.setItem('J-tockAuth-Storage', credentials)
-      })
+      cy.visit('/')
     })
 
     it('doesnt see ad when validated', () => {
