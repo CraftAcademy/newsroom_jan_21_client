@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import RegistrationForm from './RegistrationForm'
 import { Grid, Menu, Image } from 'semantic-ui-react'
 import { Link, useLocation } from "react-router-dom"
 import logo from '../assets/navLogo.png'
@@ -28,6 +29,9 @@ const NavBar = () => {
             active={activeItem === '/explore'}
             onClick={() => setActiveItem('/explore')}
           />
+          <Menu.Menu position="bottom">
+            <RegistrationForm />
+          </Menu.Menu>
         </Menu>
       </Grid.Column>
     </Grid>

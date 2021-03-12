@@ -26,7 +26,7 @@ describe('only displays ads for un-registered users', () => {
     beforeEach(() => {
       cy.route({
         method: 'POST',
-        url: 'http://localhost:3000/api/auth/sign_up',
+        url: 'http://localhost:3000/api/auth?**',
         response: 'fixture:validatedLogin.json',
         headers: {
           uid: 'user@gmail.com'
