@@ -31,6 +31,7 @@ const GetLocal = () => {
           <Image
             data-cy="main-ad"
             target="_blank"
+            style={{ width: 300}}
             as='a'
             href="https://track.adtraction.com/t/t?a=1408351772&as=1552093853&t=2&tk=1"
             src="https://track.adtraction.com/t/t?a=1408351772&as=1552093853&t=1&tk=1&i=1"

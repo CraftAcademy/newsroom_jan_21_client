@@ -6,6 +6,7 @@ describe('only displays ads for un-registered users', () => {
       url: 'http://localhost:3000/api/articles?lat=**',
       response: 'fixture:locationList.json'
     })
+
     cy.visit('/', ({
       onBeforeLoad(window) {
         const stubLocation = {
@@ -19,10 +20,16 @@ describe('only displays ads for un-registered users', () => {
             return callback(stubLocation)
           }
         )
+        const credentials = {
+          uid: 'user@gmail.com',
+          client: 'dsij21879uasdiSAD',
+          "access-token": 'pojdsAsad767ASD'
+        }
+        window.localStorage.setItem('J-tockAuth-Storage', JSON.stringify(credentials))
       }
     }))
   })
-  describe('successfully', () => {
+  describe('successfully through registration', () => {
     beforeEach(() => {
       cy.route({
         method: 'POST',
@@ -44,6 +51,63 @@ describe('only displays ads for un-registered users', () => {
         cy.get('[data-cy="password-confirmation-field"]').type('password')
         cy.get('[data-cy="submit"]').click()
       })
+      cy.get('[data-cy="main-ad"]').should('not.be.visible')
+    })
+  })
+  describe('successfully through signing in', () => {
+    beforeEach(() => {
+      cy.route({
+        method: 'POST',
+        url: 'http://localhost:3000/api/auth/sign_in',
+        response: 'fixture:validatedLogin.json',
+        headers: {
+          uid: 'user@gmail.com'
+        }
+      })
+      cy.route({
+        method: 'GET',
+        url: 'http://localhost:3000/api/auth/validate_token?**',
+        response: 'fixture:validatedLogin.json',
+        headers: {
+          uid: 'user@gmail.com'
+        }
+      })
+    })
+
+    it('signs in to not see ad', () => {
+      cy.get('[data-cy="main-ad"]').should('be.visible')
+      cy.get('[data-cy="register-button"]').click()
+      cy.get('[data-cy="sign-in-button"]').click()
+      cy.get('[data-cy="sign-in-form"]').within(() => {
+        cy.get('[data-cy="email-field"]').type('user@email.com')
+        cy.get('[data-cy="password-field"]').type('password')
+        cy.get('[data-cy="submit"]').click()
+      })
+      cy.get('[data-cy="main-ad"]').should('not.be.visible')
+    })
+  })
+
+  describe('successfully through automatic validation', () => {
+    beforeEach(() => {
+      cy.route({
+        method: 'GET',
+        url: 'http://localhost:3000/api/auth/validate_token?**',
+        response: 'fixture:validatedLogin.json',
+        headers: {
+          uid: 'user@gmail.com'
+        }
+      })
+      cy.on('window:before:load', (windows) => {
+        const credentials = {
+          uid: 'user@gmail.com',
+          client: 'dsij21879uasdiSAD',
+          "access-token": 'pojdsAsad767ASD'
+        }
+        window.localStorage.setItem('J-tockAuth-Storage', credentials)
+      })
+    })
+
+    it('doesnt see ad when validated', () => {
       cy.get('[data-cy="main-ad"]').should('not.be.visible')
     })
   })

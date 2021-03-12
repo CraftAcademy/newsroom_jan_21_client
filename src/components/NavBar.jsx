@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import RegistrationForm from './RegistrationForm'
-import { Grid, Menu, Image } from 'semantic-ui-react'
+import { Grid, Menu, Image, Button } from 'semantic-ui-react'
+import { useSelector } from 'react-redux'
+import { signOutUser } from '../modules/authenticationServices'
 import { Link, useLocation } from "react-router-dom"
 import logo from '../assets/navLogo.png'
 
 const NavBar = () => {
   const location = useLocation()
   const [activeItem, setActiveItem] = useState(location.pathname)
+  const { authenticated } = useSelector(state => state)
 
   return (
     <Grid className="nav-bar">
@@ -29,11 +32,19 @@ const NavBar = () => {
             active={activeItem === '/explore'}
             onClick={() => setActiveItem('/explore')}
           />
-          <Menu.Menu position="bottom">
-            <RegistrationForm />
-          </Menu.Menu>
         </Menu>
       </Grid.Column>
+      <div className="user-button">
+        {!authenticated ? (
+          <RegistrationForm />
+        ) : (
+            <Button
+              color="blue"
+              data-cy="log-out-button"
+              onClick={() => signOutUser()}
+            >Log out</Button>
+          )}
+      </div>
     </Grid>
   )
 }

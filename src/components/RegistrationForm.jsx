@@ -1,18 +1,20 @@
 import React, { useState } from 'react'
+import {useSelector }from 'react-redux'
 import { registerUser, signInUser } from '../modules/authenticationServices'
 import { Button, Modal, Form, Grid, Header, Message, Segment, Input } from 'semantic-ui-react'
+import store from '../state/store/configureStore'
 
 const RegistrationForm = () => {
   const [open, setOpen] = useState(false)
   const [secondOpen, setSecondOpen] = useState(false)
-  const [errorMessage, setErrorMessage] = useState()
+  const {errorMessage} = useSelector(state => state)
 
   return (
     <>
       <Modal
         onClose={() => {
           setOpen(false)
-          setErrorMessage()
+          store.dispatch({type: "RESET_ERROR"})
         }}
         onOpen={() => setOpen(true)}
         open={open}
@@ -24,7 +26,7 @@ const RegistrationForm = () => {
               Login to view the latest crypto news!
             </Header>
             {errorMessage &&
-              <p style={{ color: 'white' }} data-cy="error-message">{errorMessage}</p>
+              <p data-cy="error-message">{errorMessage}</p>
             }
             <Form onSubmit={(event) => registerUser(event, setOpen)} data-cy='registration-form' size='large'>
               <Segment stacked>
@@ -65,7 +67,7 @@ const RegistrationForm = () => {
                 onClick={() => {
                   setOpen(false)
                   setSecondOpen(true)
-                  setErrorMessage()
+                  store.dispatch({type: "RESET_ERROR"})
                 }}>
                 Sign in!
              </Button>
@@ -77,7 +79,7 @@ const RegistrationForm = () => {
       <Modal
         onClose={() => {
           setSecondOpen(false)
-          setErrorMessage()
+          store.dispatch({type: "RESET_ERROR"})
         }}
         open={secondOpen}
       >
@@ -87,9 +89,9 @@ const RegistrationForm = () => {
               Welcome back!
             </Header>
             {errorMessage &&
-              <p style={{ color: 'white' }} data-cy="error-message">{errorMessage}</p>
+              <p  data-cy="error-message">{errorMessage}</p>
             }
-            <Form onSubmit={(event) => signInUser(event, setOpen)} data-cy='registration-form' size='large'>
+            <Form onSubmit={(event) => signInUser(event, setSecondOpen)} data-cy='sign-in-form' size='large'>
               <Segment stacked>
                 <Form.Field
                   data-cy='email-field'
