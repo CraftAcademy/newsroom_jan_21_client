@@ -39,7 +39,7 @@ const SingleArticle = () => {
                   {content.author && `Author: ${content.author.name}`}
                 </Header.Subheader>
               </Header>
-              <Image alt="article-image" src={content.image}/>
+              <Image alt="article-image" src={content.image} />
               <Header as="h4" data-cy="article-teaser">{content.teaser}</Header>
               <p data-cy="article-body">{contentList}</p>
             </>

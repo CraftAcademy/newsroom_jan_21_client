@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {useSelector }from 'react-redux'
+import { useSelector } from 'react-redux'
 import { registerUser, signInUser } from '../modules/authenticationServices'
 import { Button, Modal, Form, Grid, Header, Message, Segment, Input } from 'semantic-ui-react'
 import store from '../state/store/configureStore'
@@ -7,14 +7,14 @@ import store from '../state/store/configureStore'
 const RegistrationForm = () => {
   const [open, setOpen] = useState(false)
   const [secondOpen, setSecondOpen] = useState(false)
-  const {errorMessage} = useSelector(state => state)
+  const { errorMessage } = useSelector(state => state)
 
   return (
     <>
       <Modal
         onClose={() => {
           setOpen(false)
-          store.dispatch({type: "RESET_ERROR"})
+          store.dispatch({ type: "RESET_ERROR" })
         }}
         onOpen={() => setOpen(true)}
         open={open}
@@ -67,7 +67,7 @@ const RegistrationForm = () => {
                 onClick={() => {
                   setOpen(false)
                   setSecondOpen(true)
-                  store.dispatch({type: "RESET_ERROR"})
+                  store.dispatch({ type: "RESET_ERROR" })
                 }}>
                 Sign in!
              </Button>
@@ -79,7 +79,7 @@ const RegistrationForm = () => {
       <Modal
         onClose={() => {
           setSecondOpen(false)
-          store.dispatch({type: "RESET_ERROR"})
+          store.dispatch({ type: "RESET_ERROR" })
         }}
         open={secondOpen}
       >
@@ -89,7 +89,7 @@ const RegistrationForm = () => {
               Welcome back!
             </Header>
             {errorMessage &&
-              <p  data-cy="error-message">{errorMessage}</p>
+              <p data-cy="error-message">{errorMessage}</p>
             }
             <Form onSubmit={(event) => signInUser(event, setSecondOpen)} data-cy='sign-in-form' size='large'>
               <Segment stacked>
