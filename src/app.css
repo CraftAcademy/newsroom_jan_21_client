@@ -27,6 +27,13 @@
   width: 206px;
 }
 
+.user-button {
+  position: absolute;
+  width: 206px;
+  bottom: 25px;
+  text-align: center;
+}
+
 .main-view {
   margin-left: 206px!important;
   padding-right: 50px!important;

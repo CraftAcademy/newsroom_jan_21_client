@@ -26,6 +26,21 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         errorMessage: action.payload
       }
+    case "LOG_OUT": 
+      return {
+        ...state,
+        authenticated: false
+      }
+    case "RESET_ERROR":
+      return {
+        ...state,
+        errorMessage: ''
+      }
+    case "AUTHENTICATE":
+      return {
+        ...state,
+        authenticated: true
+      }
     default:
       return state
   }
